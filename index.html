@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wovn — Coming Soon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --stone:#e7e6e1;      /* logo background */
+    --slate:#43434d;      /* logo ink */
+    --slate-deep:#2c2c34;
+    --taupe:#b9b0a2;
+    --champagne:#cfc2a8;
+    --muted:rgba(67,67,77,.68);
+    --glass:rgba(255,255,255,.34);
+    --glass-border:rgba(255,255,255,.7);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--stone);color:var(--slate);
+    font-family:'Inter',system-ui,sans-serif;font-weight:300;
+    min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* Colour field behind the glass, drawn from the brand palette */
+  .field{position:fixed;inset:0;z-index:0;overflow:hidden}
+  .blob{position:absolute;border-radius:50%;filter:blur(80px);animation:drift 26s ease-in-out infinite alternate}
+  .b1{width:50vw;height:50vw;left:-12vw;top:-16vw;background:var(--slate);opacity:.55}
+  .b2{width:38vw;height:38vw;right:-8vw;top:14vh;background:var(--taupe);opacity:.75;animation-delay:-8s}
+  .b3{width:46vw;height:46vw;left:18vw;bottom:-24vw;background:var(--champagne);opacity:.85;animation-delay:-14s}
+  .b4{width:26vw;height:26vw;right:22vw;top:-8vw;background:#fff;opacity:.9;animation-delay:-4s}
+  @keyframes drift{to{transform:translate3d(4vw,3vh,0) scale(1.08)}}
+
+  /* Fine woven texture */
+  .weave{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.5;
+    background:
+      repeating-linear-gradient(45deg,rgba(67,67,77,.05) 0 1px,transparent 1px 5px),
+      repeating-linear-gradient(-45deg,rgba(67,67,77,.05) 0 1px,transparent 1px 5px);}
+
+  header,main,footer{position:relative;z-index:2}
+  header{display:flex;justify-content:space-between;align-items:center;padding:30px clamp(20px,5vw,56px);
+    font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+
+  main{flex:1;display:grid;place-items:center;padding:12px clamp(16px,5vw,56px) 40px}
+  .card{
+    width:min(720px,100%);text-align:center;position:relative;
+    padding:clamp(40px,6vw,76px) clamp(24px,5vw,72px) clamp(36px,5vw,60px);
+    background:var(--glass);
+    border:1px solid var(--glass-border);
+    border-radius:30px;
+    backdrop-filter:blur(30px) saturate(150%);
+    -webkit-backdrop-filter:blur(30px) saturate(150%);
+    box-shadow:0 40px 90px rgba(44,44,52,.22), inset 0 1px 0 rgba(255,255,255,.9), inset 0 -1px 0 rgba(255,255,255,.25);
+    animation:rise 1.2s cubic-bezier(.2,.7,.2,1) both;
+  }
+  /* inner hairline for a jewellery-box finish */
+  .card::before{content:"";position:absolute;inset:10px;border:1px solid rgba(67,67,77,.12);border-radius:22px;pointer-events:none}
+  @keyframes rise{from{opacity:0;transform:translateY(18px)}}
+
+  .logo{width:min(440px,78%);height:auto;display:block;margin:0 auto}
+  .logo path,.logo ellipse{fill:url(#ink)}
+  .tagline{margin-top:16px;font-weight:600;font-size:clamp(10px,1.7vw,13px);letter-spacing:.42em;text-transform:uppercase;padding-left:.42em}
+
+  .rule{display:flex;align-items:center;justify-content:center;gap:14px;margin:38px 0 26px;color:var(--taupe)}
+  .rule::before,.rule::after{content:"";width:56px;height:1px;background:linear-gradient(90deg,transparent,var(--taupe))}
+  .rule::after{transform:scaleX(-1)}
+  .rule i{width:5px;height:5px;transform:rotate(45deg);background:var(--taupe)}
+
+  .eyebrow{font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;padding-left:.34em}
+  h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(34px,6vw,54px);line-height:1.08;letter-spacing:-.005em}
+  h1 em{font-style:italic}
+  .lead{margin:18px auto 0;max-width:400px;line-height:1.75;color:var(--muted);font-size:14.5px}
+
+  .count{display:flex;justify-content:center;gap:clamp(8px,2vw,16px);margin:36px 0 32px}
+  .unit{min-width:76px;padding:15px 8px 12px;border-radius:16px;
+    background:rgba(255,255,255,.42);border:1px solid rgba(255,255,255,.8);
+    box-shadow:0 8px 22px rgba(44,44,52,.07)}
+  .unit b{display:block;font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(30px,5vw,40px);line-height:1;font-variant-numeric:lining-nums}
+  .unit span{display:block;margin-top:8px;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);padding-left:.24em}
+
+  form{display:flex;gap:6px;padding:6px;border-radius:999px;max-width:470px;margin:0 auto;
+    background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.85);box-shadow:0 8px 24px rgba(44,44,52,.08)}
+  input{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--slate);padding:0 20px;font:inherit;font-size:14px}
+  input::placeholder{color:rgba(67,67,77,.5)}
+  button{border:0;cursor:pointer;border-radius:999px;padding:15px 28px;
+    background:linear-gradient(180deg,var(--slate),var(--slate-deep));color:var(--stone);
+    font:inherit;font-weight:500;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;
+    transition:transform .25s,box-shadow .25s;box-shadow:0 6px 16px rgba(44,44,52,.25)}
+  button:hover{transform:translateY(-1px);box-shadow:0 10px 22px rgba(44,44,52,.3)}
+  .note{margin-top:16px;font-size:12px;color:var(--muted)}
+
+  footer{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+    padding:22px clamp(20px,5vw,56px) 32px;font-size:12px;color:var(--muted)}
+  .social{display:flex;gap:24px}
+  .social a{color:var(--slate);text-decoration:none;letter-spacing:.2em;text-transform:uppercase;font-size:11px;
+    padding-bottom:3px;border-bottom:1px solid transparent;transition:border-color .2s}
+  .social a:hover{border-color:var(--slate)}
+
+  @media (max-width:540px){
+    .unit{min-width:62px}
+    form{flex-direction:column;border-radius:22px;padding:8px}
+    input{padding:14px 16px;text-align:center}
+    footer{justify-content:center;text-align:center}
+    header span:last-child{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){.blob,.card{animation:none}}
+</style>
+</head>
+<body>
+  <div class="field">
+    <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div>
+  </div>
+  <div class="weave"></div>
+
+  <header>
+    <span>Est. 2026</span>
+    <span>Collection 01</span>
+  </header>
+
+  <main>
+    <section class="card">
+      <!-- WOVN wordmark, redrawn as vector to match the brand logo -->
+      <svg class="logo" viewBox="94 284 672 176" role="img" aria-label="WOVN">
+        <defs>
+          <linearGradient id="ink" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#4d4d58"/>
+            <stop offset="1" stop-color="#383840"/>
+          </linearGradient>
+        </defs>
+        <g transform="translate(98 0) scale(.955 1) translate(-98 0)">
+        <path d="M98 292 H152 L178 452 H158 Z"/>
+        <path d="M158 452 H178 L228 300 L210 292 Z"/>
+        <path d="M206 292 H264 L290 452 H270 Z"/>
+        <path d="M272 452 H292 L326 292 H300 Z"/>
+        </g>
+        <!-- O -->
+        <path fill-rule="evenodd" d="M328 372 a76 82 0 1 0 152 0 a76 82 0 1 0 -152 0 Z
+          M370 372 a20 62 -14 1 0 40 0 a20 62 -14 1 0 -40 0 Z" transform="translate(0 0)"/>
+        <g transform="translate(496 0) scale(.95 1) translate(-496 0)">
+        <path d="M496 292 H560 L588 452 H566 Z"/>
+        <path d="M574 452 H592 L632 292 H602 Z"/>
+        </g>
+        <!-- N -->
+        <path d="M634 292 H656 V452 H634 Z"/>
+        <path d="M634 292 H694 L762 452 H702 Z"/>
+        <path d="M740 292 H762 V452 H740 Z"/>
+      </svg>
+      <p class="tagline">The Art of Wearing</p>
+
+      <div class="rule"><i></i></div>
+
+      <p class="eyebrow">Opening Soon</p>
+      <h1>Woven with <em>intention.</em></h1>
+      <p class="lead">Refined essentials, made to be worn and kept. Our first collection arrives shortly.</p>
+
+      <div class="count" aria-label="Countdown to launch">
+        <div class="unit"><b id="d">00</b><span>Days</span></div>
+        <div class="unit"><b id="h">00</b><span>Hours</span></div>
+        <div class="unit"><b id="m">00</b><span>Min</span></div>
+        <div class="unit"><b id="s">00</b><span>Sec</span></div>
+      </div>
+
+      <form onsubmit="event.preventDefault();this.querySelector('button').textContent='You’re on the list'">
+        <input type="email" placeholder="Your email address" required aria-label="Email address">
+        <button type="submit">Notify me</button>
+      </form>
+      <p class="note">Early access and 10% off your first order.</p>
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 Wovnwear. All rights reserved.</span>
+    <nav class="social"><a href="#">Instagram</a><a href="#">Pinterest</a><a href="#">TikTok</a></nav>
+  </footer>
+
+<script>
+  // Launch: fixed date, 7 days from 9 Oct 2026 (Bangladesh time)
+  const target = new Date('2026-10-16T22:00:00+06:00').getTime();
+  const pad = n => String(n).padStart(2,'0');
+  const d_=document.getElementById('d'),h_=document.getElementById('h'),m_=document.getElementById('m'),s_=document.getElementById('s');
+  function tick(){
+    let t = Math.max(0, target - Date.now());
+    const d = Math.floor(t/864e5); t -= d*864e5;
+    const h = Math.floor(t/36e5);  t -= h*36e5;
+    const m = Math.floor(t/6e4);   t -= m*6e4;
+    d_.textContent=pad(d); h_.textContent=pad(h); m_.textContent=pad(m); s_.textContent=pad(Math.floor(t/1e3));
+  }
+  tick(); setInterval(tick,1000);
+</script>
+</body>
+</html>
